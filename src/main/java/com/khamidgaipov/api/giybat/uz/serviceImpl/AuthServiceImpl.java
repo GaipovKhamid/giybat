@@ -22,7 +22,6 @@ public class AuthServiceImpl implements AuthService {
             throw new BadReqException("Username already exists");
         }
 
-
         return null;
     }
 }
