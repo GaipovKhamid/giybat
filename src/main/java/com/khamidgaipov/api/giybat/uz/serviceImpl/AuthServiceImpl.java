@@ -2,6 +2,7 @@ package com.khamidgaipov.api.giybat.uz.serviceImpl;
 
 import com.khamidgaipov.api.giybat.uz.dto.RegistrationDto;
 import com.khamidgaipov.api.giybat.uz.entity.ProfileEntity;
+import com.khamidgaipov.api.giybat.uz.enums.GeneralStatus;
 import com.khamidgaipov.api.giybat.uz.exception.BadReqException;
 import com.khamidgaipov.api.giybat.uz.repository.ProfileRepository;
 import com.khamidgaipov.api.giybat.uz.service.AuthService;
@@ -19,9 +20,21 @@ public class AuthServiceImpl implements AuthService {
     public String registration(RegistrationDto dto) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isPresent()) {
-            throw new BadReqException("Username already exists");
+            ProfileEntity entity = optional.get();
+            if (entity.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
+                profileRepository.delete(entity);
+                // sms todo
+            } else {
+                throw new BadReqException("Username already exists");
+            }
         }
 
-        return null;
+        ProfileEntity entity = new ProfileEntity();
+        entity.setName(dto.getName());
+        entity.setUsername(dto.getUsername());
+        entity.setPassword(dto.getPassword()); // todo hide password
+
+
+        return "Successfully registered";
     }
 }
