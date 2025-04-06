@@ -7,14 +7,18 @@ import com.khamidgaipov.api.giybat.uz.exception.BadReqException;
 import com.khamidgaipov.api.giybat.uz.repository.ProfileRepository;
 import com.khamidgaipov.api.giybat.uz.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
     @Autowired
     ProfileRepository profileRepository;
+    @Autowired
+    BCryptPasswordEncoder bc;
 
     @Override
     public String registration(RegistrationDto dto) {
@@ -29,10 +33,17 @@ public class AuthServiceImpl implements AuthService {
             }
         }
 
+        BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
         entity.setUsername(dto.getUsername());
-        entity.setPassword(dto.getPassword()); // todo hide password
+        entity.setPassword(bc.encode(dto.getPassword()));
+        entity.setStatus(GeneralStatus.IN_REGISTRATION);
+        entity.setVisible(true);
+        entity.setCreatedDate(LocalDateTime.now());
+
+        profileRepository.save(entity);
 
 
         return "Successfully registered";
