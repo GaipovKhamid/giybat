@@ -33,8 +33,6 @@ public class AuthServiceImpl implements AuthService {
             }
         }
 
-        BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
         entity.setUsername(dto.getUsername());
