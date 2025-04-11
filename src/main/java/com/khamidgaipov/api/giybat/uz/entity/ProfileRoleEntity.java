@@ -21,7 +21,7 @@ public class ProfileRoleEntity {
     private ProfileEntity profile;
 
     @Column(name = "profile_id")
-    private int profileId;
+    private Long profileId;
 
     @Column
     @Enumerated(EnumType.STRING)

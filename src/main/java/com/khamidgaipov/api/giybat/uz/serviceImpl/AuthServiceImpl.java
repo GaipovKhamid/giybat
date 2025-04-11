@@ -3,8 +3,8 @@ package com.khamidgaipov.api.giybat.uz.serviceImpl;
 import com.khamidgaipov.api.giybat.uz.dto.RegistrationDto;
 import com.khamidgaipov.api.giybat.uz.entity.ProfileEntity;
 import com.khamidgaipov.api.giybat.uz.enums.GeneralStatus;
+import com.khamidgaipov.api.giybat.uz.enums.ProfileRole;
 import com.khamidgaipov.api.giybat.uz.exception.AppBadException;
-import com.khamidgaipov.api.giybat.uz.exception.BadReqException;
 import com.khamidgaipov.api.giybat.uz.repository.ProfileRepository;
 import com.khamidgaipov.api.giybat.uz.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,8 @@ public class AuthServiceImpl implements AuthService {
     ProfileRepository profileRepository;
     @Autowired
     BCryptPasswordEncoder bc;
+    @Autowired
+    ProfileRoleServiceImpl profileRoleService;
 
     @Override
     public String registration(RegistrationDto dto) {
@@ -41,10 +43,9 @@ public class AuthServiceImpl implements AuthService {
         entity.setStatus(GeneralStatus.IN_REGISTRATION);
         entity.setVisible(true);
         entity.setCreatedDate(LocalDateTime.now());
-
         profileRepository.save(entity);
 
-
+        profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
         return "Successfully registered";
     }
 }
