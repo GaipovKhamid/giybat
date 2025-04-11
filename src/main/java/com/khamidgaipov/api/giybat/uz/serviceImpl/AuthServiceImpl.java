@@ -3,6 +3,7 @@ package com.khamidgaipov.api.giybat.uz.serviceImpl;
 import com.khamidgaipov.api.giybat.uz.dto.RegistrationDto;
 import com.khamidgaipov.api.giybat.uz.entity.ProfileEntity;
 import com.khamidgaipov.api.giybat.uz.enums.GeneralStatus;
+import com.khamidgaipov.api.giybat.uz.exception.AppBadException;
 import com.khamidgaipov.api.giybat.uz.exception.BadReqException;
 import com.khamidgaipov.api.giybat.uz.repository.ProfileRepository;
 import com.khamidgaipov.api.giybat.uz.service.AuthService;
@@ -29,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
                 profileRepository.delete(entity);
                 // sms todo
             } else {
-                throw new BadReqException("Username already exists");
+                throw new AppBadException("Username already exists");
             }
         }
 
