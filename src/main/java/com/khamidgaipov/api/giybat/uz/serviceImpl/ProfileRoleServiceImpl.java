@@ -21,4 +21,8 @@ public class ProfileRoleServiceImpl {
 
         repository.save(profileRoleEntity);
     }
+
+    public void deleteRoles(Long id){
+        repository.deleteByProfileId(id);
+    }
 }

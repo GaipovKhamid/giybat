@@ -29,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
         if (optional.isPresent()) {
             ProfileEntity entity = optional.get();
             if (entity.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
+                profileRoleService.deleteRoles(entity.getId());
                 profileRepository.delete(entity);
                 // sms todo
             } else {
