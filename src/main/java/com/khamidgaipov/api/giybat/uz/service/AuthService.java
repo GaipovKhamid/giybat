@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AuthService {
     String registration(RegistrationDto dto);
+
+    String regVerification(Long profileId);
 }

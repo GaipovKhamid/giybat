@@ -7,6 +7,7 @@ import com.khamidgaipov.api.giybat.uz.enums.ProfileRole;
 import com.khamidgaipov.api.giybat.uz.exception.AppBadException;
 import com.khamidgaipov.api.giybat.uz.repository.ProfileRepository;
 import com.khamidgaipov.api.giybat.uz.service.AuthService;
+import com.khamidgaipov.api.giybat.uz.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class AuthServiceImpl implements AuthService {
     BCryptPasswordEncoder bc;
     @Autowired
     ProfileRoleServiceImpl profileRoleService;
+    @Autowired
+    ProfileService profileService;
+    @Autowired
+    EmailSenderServiceImpl senderService;
 
     @Override
     public String registration(RegistrationDto dto) {
@@ -47,6 +52,14 @@ public class AuthServiceImpl implements AuthService {
         profileRepository.save(entity);
 
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
+        senderService.sendRegistrationEmail(dto.getUsername(), entity.getId());
         return "Successfully registered";
+    }
+
+    @Override
+    public String regVerification(Long profileId) {
+        ProfileEntity profile = profileService.getById(profileId);
+        // change status
+        return null;
     }
 }
