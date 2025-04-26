@@ -6,8 +6,6 @@ import com.khamidgaipov.api.giybat.uz.enums.GeneralStatus;
 import com.khamidgaipov.api.giybat.uz.enums.ProfileRole;
 import com.khamidgaipov.api.giybat.uz.exception.AppBadException;
 import com.khamidgaipov.api.giybat.uz.repository.ProfileRepository;
-import com.khamidgaipov.api.giybat.uz.service.AuthService;
-import com.khamidgaipov.api.giybat.uz.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class AuthServiceImpl implements AuthService {
+public class AuthServiceImpl{
     @Autowired
     ProfileRepository profileRepository;
     @Autowired
@@ -24,11 +22,10 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     ProfileRoleServiceImpl profileRoleService;
     @Autowired
-    ProfileService profileService;
-    @Autowired
     EmailSenderServiceImpl senderService;
+    @Autowired
+    ProfileServiceImpl profileService;
 
-    @Override
     public String registration(RegistrationDto dto) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isPresent()) {
@@ -56,7 +53,6 @@ public class AuthServiceImpl implements AuthService {
         return "Successfully registered";
     }
 
-    @Override
     public String regVerification(Long profileId) {
         ProfileEntity profile = profileService.getById(profileId);
         // change status
