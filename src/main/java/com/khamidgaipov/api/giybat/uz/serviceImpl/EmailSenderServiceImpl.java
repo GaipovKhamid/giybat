@@ -16,7 +16,7 @@ public class EmailSenderServiceImpl {
 
     public void sendRegistrationEmail(String email, Long profileId) {
         String subject = "Complete registered";
-        String body = "Registration Email. Please click to link "+ profileId;
+        String body = "Please click to link for complete http://localhost:8080/auth/registration/verification/"+ profileId;
         sendEmail(email, subject, body);
     }
 

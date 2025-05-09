@@ -20,6 +20,6 @@ public class AuthController {
 
     @GetMapping("/registration/verification/{id}")
     public ResponseEntity<String> regVerification(@PathVariable("id") Long profileId) {
-        return ResponseEntity.ok().body(authService.regVerification (profileId));
+        return ResponseEntity.ok().body(authService.regVerification(profileId));
     }
 }

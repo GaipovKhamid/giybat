@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class AuthServiceImpl{
+public class AuthServiceImpl {
     @Autowired
     ProfileRepository profileRepository;
     @Autowired
@@ -55,7 +55,9 @@ public class AuthServiceImpl{
 
     public String regVerification(Long profileId) {
         ProfileEntity profile = profileService.getById(profileId);
-        // change status
-        return null;
+        if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
+            profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
+        }
+        throw new AppBadException("Registration failed");
     }
 }
