@@ -57,6 +57,7 @@ public class AuthServiceImpl {
         ProfileEntity profile = profileService.getById(profileId);
         if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
             profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
+            return "Successfully activated";
         }
         throw new AppBadException("Registration failed");
     }

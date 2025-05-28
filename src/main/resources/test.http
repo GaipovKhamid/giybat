@@ -4,9 +4,10 @@ Content-Type: application/json
 
 {
   "name": "Khamid",
-  "username": "gaipovkhamid65@gmail.com",
+  "username": "gaipovkhamid.uz@gmail.com",
   "password": "Khamid001"
 }
 
-### Reg verification
-GET
+
+### Verification
+GET localhost:8080/auth/registration/verification/{id}

@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
-public class SpringConfig {
+public class  SpringConfig {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
