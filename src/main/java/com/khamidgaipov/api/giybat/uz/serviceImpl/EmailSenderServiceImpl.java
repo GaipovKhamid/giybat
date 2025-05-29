@@ -1,6 +1,7 @@
 package com.khamidgaipov.api.giybat.uz.serviceImpl;
 
 import com.khamidgaipov.api.giybat.uz.exception.AppBadException;
+import com.khamidgaipov.api.giybat.uz.util.JwtUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,11 @@ public class EmailSenderServiceImpl {
                 "<p>\n" +
                 "    Please click to button for complete registration.\n" +
                 "</p>\n" +
-                "<a href=\"http://localhost:8080/auth/registration/verification/%d\" target=\"_blank\" class=\"button-link\">Click</a>\n" +
+                "<a href=\"http://localhost:8080/auth/registration/verification/%s\" target=\"_blank\" class=\"button-link\">Click</a>\n" +
                 "</body>\n" +
                 "</html>";
 
-        body = String.format(body, profileId);
+        body = String.format(body, JwtUtil.encode(profileId));
         sendMimeMessage(email, subject, body);
     }
 

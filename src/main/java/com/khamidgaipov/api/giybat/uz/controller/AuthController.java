@@ -18,8 +18,8 @@ public class AuthController {
         return ResponseEntity.ok().body(authService.registration(dto));
     }
 
-    @GetMapping("/registration/verification/{id}")
-    public ResponseEntity<String> regVerification(@PathVariable("id") Long profileId) {
-        return ResponseEntity.ok().body(authService.regVerification(profileId));
+    @GetMapping("/registration/verification/{token}")
+    public ResponseEntity<String> regVerification(@PathVariable("token") String token) {
+        return ResponseEntity.ok().body(authService.regVerification(token));
     }
 }

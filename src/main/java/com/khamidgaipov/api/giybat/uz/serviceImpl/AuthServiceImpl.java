@@ -6,6 +6,8 @@ import com.khamidgaipov.api.giybat.uz.enums.GeneralStatus;
 import com.khamidgaipov.api.giybat.uz.enums.ProfileRole;
 import com.khamidgaipov.api.giybat.uz.exception.AppBadException;
 import com.khamidgaipov.api.giybat.uz.repository.ProfileRepository;
+import com.khamidgaipov.api.giybat.uz.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,12 +55,17 @@ public class AuthServiceImpl {
         return "Successfully registered";
     }
 
-    public String regVerification(Long profileId) {
-        ProfileEntity profile = profileService.getById(profileId);
-        if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
-            profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
-            return "Successfully activated";
+    public String regVerification(String token) {
+        Long profileId = JwtUtil.decodeRegVerToken(token);
+        try {
+            ProfileEntity profile = profileService.getById(profileId);
+            if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
+                profileRepository.changeStatus(profileId, GeneralStatus.ACTIVE);
+                return "Successfully activated";
+            }
+        } catch (JwtException e) {
         }
+
         throw new AppBadException("Registration failed");
     }
 }
