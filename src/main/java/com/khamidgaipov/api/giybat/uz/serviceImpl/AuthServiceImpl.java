@@ -28,6 +28,7 @@ public class AuthServiceImpl {
     @Autowired
     ProfileServiceImpl profileService;
 
+
     public String registration(RegistrationDto dto) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isPresent()) {
